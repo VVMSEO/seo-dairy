@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "A SEO project.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the project"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner of the project"
+        },
+        "availableCategories": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Categories created in this project"
+        },
+        "availableTags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags created in this project"
+        }
+      },
+      "required": ["name", "createdAt", "userId"]
+    },
+    "Note": {
+      "title": "Note",
+      "description": "A diary note for a project.",
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "description": "ID of the project this note belongs to"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the note"
+        },
+        "content": {
+          "type": "string",
+          "description": "Markdown content of the note"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the note"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags assigned to the note"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner of the note"
+        }
+      },
+      "required": ["projectId", "title", "content", "createdAt", "updatedAt", "userId"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": {
+        "$ref": "#/entities/Project"
+      },
+      "description": "Projects collection"
+    },
+    "/notes/{noteId}": {
+      "schema": {
+        "$ref": "#/entities/Note"
+      },
+      "description": "Notes collection"
+    }
+  }
+}
