@@ -136,7 +136,9 @@ export function ProjectView({ projectId, userId }: ProjectViewProps) {
             >
               <div className="font-semibold text-gray-900 truncate">{note.title || 'Новая заметка'}</div>
               <div className="text-xs text-gray-500 mt-1">{format(note.createdAt, 'dd.MM.yyyy')}</div>
-              <div className="text-sm text-gray-500 truncate mt-1">{note.content || 'Нет текста'}</div>
+              <div className="text-sm text-gray-500 truncate mt-1">
+                {note.content ? note.content.replace(/<[^>]*>?/gm, '') : 'Нет текста'}
+              </div>
             </div>
           ))}
           {notes.length === 0 && (
