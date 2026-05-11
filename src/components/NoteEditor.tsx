@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Bold, Italic, Strikethrough, Heading1, Heading2, Heading3, List, ListOrdered, CheckSquare, Quote, Code, Link as LinkIcon, Image as ImageIcon, Trash2 } from 'lucide-react';
+import { Bold, Italic, Strikethrough, Heading1, Heading2, Heading3, List, ListOrdered, CheckSquare, Quote, Code, Link as LinkIcon, Image as ImageIcon, Trash2, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { useEditor, EditorContent } from '@tiptap/react';
@@ -133,6 +133,16 @@ export function NoteEditor({ projectId, userId, availableCategories, availableTa
     setInsertDialog({ type, text: selectedText, url: '' });
   };
 
+  const insertDateTime = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent button from stealing focus
+    if (!editor) return;
+    const dateTimeString = format(new Date(), "dd.MM.yyyy HH:mm");
+    editor.chain()
+      .focus()
+      .insertContent(dateTimeString + ' ')
+      .run();
+  };
+
   if (!existingNote || !editor) return null;
 
   return (
@@ -187,6 +197,16 @@ export function NoteEditor({ projectId, userId, availableCategories, availableTa
             title="Заголовок 3"
           >
             <Heading3 className="w-4 h-4" />
+          </button>
+          <div className="w-px h-4 bg-gray-300 mx-1"></div>
+          <button 
+            type="button" 
+            onMouseDown={insertDateTime} 
+            onClick={(e) => e.preventDefault()}
+            className="p-1.5 rounded transition-colors text-gray-500 hover:bg-gray-100" 
+            title="Вставить текущую дату и время"
+          >
+            <Clock className="w-4 h-4" />
           </button>
           <div className="w-px h-4 bg-gray-300 mx-1"></div>
           <button 

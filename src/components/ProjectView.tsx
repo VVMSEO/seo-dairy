@@ -85,10 +85,11 @@ export function ProjectView({ projectId, userId }: ProjectViewProps) {
 
   const handleCreateNote = async () => {
     try {
+      const dateTimeString = format(new Date(), "dd.MM.yyyy HH:mm");
       const docRef = await addDoc(collection(db, 'notes'), {
         projectId,
         userId,
-        title: 'Новая заметка',
+        title: dateTimeString,
         content: '',
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
